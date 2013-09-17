@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<style>
+    .hide{
+        display:none;
+    }
+    .item{
+        position:absolute;
+    }
+    body{
+        width:1000px;
+        height:600px;
+        overflow:hidden;
+    }
+</style>
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./js-libs/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="./js-libs/bootstrap/css/bootstrap-responsive.min.css"/>
+
+        <script src="./js-libs/jquery-2.0.0.min.js"></script>
+        <script src="./js-libs/bootstrap/js/bootstrap.min.js"></script>
+        <script src="src/misc.js"></script>
+        <script src="src/shoe.js"></script>
+        <script src="src/strategy.js"></script>
+        <script src="src/player.js"></script>
+        <script src="src/dealer.js"></script>
+        <script src="src/table.js"></script>
+        <script src="src/statistics.js"></script>
+        <script src="src/main.js"></script>
+    </head>
+    <body>
+        <div id='main' class='container'>
+            <h1>Blackjack</h1>
+            <form>
+                <fieldset>
+                    <select id='strategy' class='form-control'>
+                        <option value='basic'>Basic</option>
+                        <option value='cassidyH17'>Cassidy's H17</option>
+                        <option value='hilo'>HiLo</option>
+                    </select>
+                    <select id='dealer-hits' class='form-control'>
+                        <option value='h17'>H17</option>
+                        <option value='s17'>S17</option>
+                    </select>
+                    <label>Min-Max Bet:
+                        <input type='text' class='form-control' name='min-bet' value='10'/>
+                        - 
+                        <input type='text' class='form-control' name='max-bet' value='100'/>
+                    </label>
+                    <label>Spread:<input type='text' name='spread' value='4'/></label>
+                    <label>Number of Players:<input type='text' name='numOfPlayers' value='1'/></label>
+                    <label>Number of Decks:<input type='text' name='numOfDecks' value='6'/></label>
+                    <label>Number of Hands:<input type='text' name='numOfHands' value='10000'/></label>
+                    <label>Penetration:<input type='text' name='penetration' value='.84'/></label>
+                    <button id='run'>Run</button>
+
+                </fieldset>
+            </form>
+
+            <div id='results'>
+
+            </div>
+        </div>
+            
+    </body>
+</html>
+
+
+<script>
+
+    $(document).ready(function(){
+        $('#run').on('click', function(){
+            var parameters = {
+                numOfHands: parseInt($('input[name="numOfHands"]').val()),
+                numOfDecks: parseInt($('input[name="numOfDecks"]').val()),
+                numOfPlayers: parseInt($('input[name="numOfPlayers"]').val()),
+                minBet: parseInt($('input[name="min-bet"]').val()),
+                maxBet: parseInt($('input[name="max-bet"]').val()),
+                spread: parseInt($('input[name="spread"]').val()),
+                penetration: parseFloat($('input[name="penetration"]').val()),
+                dealerHits: $('#dealer-hits').val(),
+                strategy: $('#strategy').val(),
+            };
+            main(parameters);
+            return false;
+        });
+    });
+</script>
