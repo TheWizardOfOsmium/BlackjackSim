@@ -131,12 +131,12 @@ BJ.StrategyFactory = {
 
     setRowFromArray: function(strategy, playerHand, actions){
         for (var i = 0; i < actions.length; i++){
-            var fullAction = actions[i];
-            if(actions[i] === "h"){fullAction = "hit";}
-            else if(actions[i] === "db"){fullAction = "doubleDown";}
-            else if(actions[i] === "s"){fullAction = "stand";}
-            else if(actions[i] === "sp"){fullAction = "split";}
-            strategy[playerHand].dealerShowing[numberWords[i+1]] = fullAction;
+            //var fullAction = actions[i];
+            //if(actions[i] === "h"){fullAction = "hit";}
+            //else if(actions[i] === "db"){fullAction = "doubleDown";}
+            //else if(actions[i] === "s"){fullAction = "stand";}
+            //else if(actions[i] === "sp"){fullAction = "split";}
+            strategy[playerHand].dealerShowing[numberWords[i+1]] = actions[i];
         }
     },
 
@@ -151,55 +151,55 @@ BJ.StrategyFactory = {
             this.stop = stop;
         }
 
-        setRow(strategy, numberWords[1], "hit");
-        setRow(strategy, numberWords[2], "hit");
-        setRow(strategy, numberWords[3], "hit");
-        setRow(strategy, numberWords[4], "hit");
-        setRow(strategy, numberWords[5], "hit");
-        setRow(strategy, numberWords[6], "hit");
-        setRow(strategy, numberWords[7], "hit");
-        setRow(strategy, numberWords[8], "hit");
-        setRow(strategy, numberWords[9], "hit", [new Option("doubleDown", 2, 6)]);
-        setRow(strategy, numberWords[10], "hit", [new Option("doubleDown", 2, 9)]);
-        setRow(strategy, numberWords[11], "doubleDown");
-        setRow(strategy, numberWords[12], "hit", [new Option("stand", 4, 6)]);
-        setRow(strategy, numberWords[13], "hit", [new Option("stand", 2, 6)]);
-        setRow(strategy, numberWords[14], "hit", [new Option("stand", 2, 6)]);
-        setRow(strategy, numberWords[15], "hit", [new Option("stand", 2, 6)]);
-        setRow(strategy, numberWords[16], "hit", [new Option("stand", 2, 6)]);
-        setRow(strategy, numberWords[17], "stand");
-        setRow(strategy, numberWords[18], "stand");
-        setRow(strategy, numberWords[19], "stand");
-        setRow(strategy, numberWords[20], "stand");
-        setRow(strategy, numberWords[21], "stand");
+        setRow(strategy, numberWords[1], "h");
+        setRow(strategy, numberWords[2], "h");
+        setRow(strategy, numberWords[3], "h");
+        setRow(strategy, numberWords[4], "h");
+        setRow(strategy, numberWords[5], "h");
+        setRow(strategy, numberWords[6], "h");
+        setRow(strategy, numberWords[7], "h");
+        setRow(strategy, numberWords[8], "h");
+        setRow(strategy, numberWords[9], "h", [new Option("db", 2, 6)]);
+        setRow(strategy, numberWords[10], "h", [new Option("db", 2, 9)]);
+        setRow(strategy, numberWords[11], "db");
+        setRow(strategy, numberWords[12], "h", [new Option("s", 4, 6)]);
+        setRow(strategy, numberWords[13], "h", [new Option("s", 2, 6)]);
+        setRow(strategy, numberWords[14], "h", [new Option("s", 2, 6)]);
+        setRow(strategy, numberWords[15], "h", [new Option("s", 2, 6)]);
+        setRow(strategy, numberWords[16], "h", [new Option("s", 2, 6)]);
+        setRow(strategy, numberWords[17], "s");
+        setRow(strategy, numberWords[18], "s");
+        setRow(strategy, numberWords[19], "s");
+        setRow(strategy, numberWords[20], "s");
+        setRow(strategy, numberWords[21], "s");
 
-        setRow(strategy, (numberWords[1] + "_" + numberWords[2]), "hit", [new Option("doubleDown", 5, 6)]);
-        setRow(strategy, (numberWords[1] + "_" + numberWords[3]), "hit", [new Option("doubleDown", 4, 6)]);
-        setRow(strategy, (numberWords[1] + "_" + numberWords[4]), "hit", [new Option("doubleDown", 4, 6)]);
-        setRow(strategy, (numberWords[1] + "_" + numberWords[5]), "hit", [new Option("doubleDown", 4, 6)]);
-        setRow(strategy, (numberWords[1] + "_" + numberWords[6]), "hit", [new Option("doubleDown", 3, 6)]);
-        setRow(strategy, (numberWords[1] + "_" + numberWords[7]), "hit", [new Option("ds", 2, 6), new Option("stand", 7, 8)]);
-        setRow(strategy, (numberWords[1] + "_" + numberWords[8]), "stand", [new Option("ds", 6, 6)]);
-        setRow(strategy, (numberWords[1] + "_" + numberWords[9]), "stand");
-        setRow(strategy, (numberWords[1] + "_" + numberWords[10]), "stand");
+        setRow(strategy, (numberWords[1] + "_" + numberWords[2]), "h", [new Option("db", 5, 6)]);
+        setRow(strategy, (numberWords[1] + "_" + numberWords[3]), "h", [new Option("db", 4, 6)]);
+        setRow(strategy, (numberWords[1] + "_" + numberWords[4]), "h", [new Option("db", 4, 6)]);
+        setRow(strategy, (numberWords[1] + "_" + numberWords[5]), "h", [new Option("db", 4, 6)]);
+        setRow(strategy, (numberWords[1] + "_" + numberWords[6]), "h", [new Option("db", 3, 6)]);
+        setRow(strategy, (numberWords[1] + "_" + numberWords[7]), "h", [new Option("ds", 2, 6), new Option("s", 7, 8)]);
+        setRow(strategy, (numberWords[1] + "_" + numberWords[8]), "s", [new Option("ds", 6, 6)]);
+        setRow(strategy, (numberWords[1] + "_" + numberWords[9]), "s");
+        setRow(strategy, (numberWords[1] + "_" + numberWords[10]), "s");
 
-        setRow(strategy, (numberWords[1] + "_" + numberWords[1]), "split");
-        setRow(strategy, (numberWords[2] + "_" + numberWords[2]), "hit", [new Option("split", 2, 7)]);
-        setRow(strategy, (numberWords[3] + "_" + numberWords[3]), "hit", [new Option("split", 2, 7)]);
-        setRow(strategy, (numberWords[4] + "_" + numberWords[4]), "hit", [new Option("split", 5, 6)]);
-        setRow(strategy, (numberWords[5] + "_" + numberWords[5]), "hit", [new Option("doubleDown", 2, 9)]);
-        setRow(strategy, (numberWords[6] + "_" + numberWords[6]), "hit", [new Option("split", 2, 6)]);
-        setRow(strategy, (numberWords[7] + "_" + numberWords[7]), "hit", [new Option("split", 2, 7)]);
-        setRow(strategy, (numberWords[8] + "_" + numberWords[8]), "split");
-        setRow(strategy, (numberWords[9] + "_" + numberWords[9]), "split", [new Option("stand", 7, 7), new Option("stand", 10, 10), new Option("stand", 1, 1)]);
-        setRow(strategy, (numberWords[10] + "_" + numberWords[10]), "stand");
+        setRow(strategy, (numberWords[1] + "_" + numberWords[1]), "sp");
+        setRow(strategy, (numberWords[2] + "_" + numberWords[2]), "h", [new Option("sp", 2, 7)]);
+        setRow(strategy, (numberWords[3] + "_" + numberWords[3]), "h", [new Option("sp", 2, 7)]);
+        setRow(strategy, (numberWords[4] + "_" + numberWords[4]), "h", [new Option("sp", 5, 6)]);
+        setRow(strategy, (numberWords[5] + "_" + numberWords[5]), "h", [new Option("db", 2, 9)]);
+        setRow(strategy, (numberWords[6] + "_" + numberWords[6]), "h", [new Option("sp", 2, 6)]);
+        setRow(strategy, (numberWords[7] + "_" + numberWords[7]), "h", [new Option("sp", 2, 7)]);
+        setRow(strategy, (numberWords[8] + "_" + numberWords[8]), "sp");
+        setRow(strategy, (numberWords[9] + "_" + numberWords[9]), "sp", [new Option("s", 7, 7), new Option("s", 10, 10), new Option("s", 1, 1)]);
+        setRow(strategy, (numberWords[10] + "_" + numberWords[10]), "s");
 
         return strategy;
 
 
     },
 
-
+    //this does not work with the new way of setting the chart
     buildHiLo : function(){
         var strategy = new BJ.Strategy();
 
@@ -227,7 +227,6 @@ BJ.StrategyFactory = {
         setRow(strategy, numberWords[20], ['s', 's', 's', 's', 's', 's', 's', 's', 's', 's']);
         setRow(strategy, numberWords[21], ['s', 's', 's', 's', 's', 's', 's', 's', 's', 's']);
 
-        //here
         setRow(strategy, (numberWords[1] + "_" + numberWords[2]), ['h', 'h', 'db_7', 'db_3', 'db_3', 'db_-2', 'h', 'h', 'h', 'h']);
         setRow(strategy, (numberWords[1] + "_" + numberWords[3]), ['h', 'h', 'db_6', 'db_1', 'db_-1', 'db_-5', 'h', 'h', 'h', 'h']);
         setRow(strategy, (numberWords[1] + "_" + numberWords[4]), ['h', 'h', 'db_6', 'db_0', 'db_-4', 'db_-10', 'h', 'h', 'h', 'h']);
@@ -265,15 +264,15 @@ BJ.StrategyFactory = {
         setRow(strategy, numberWords[5], ['h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h']);
         setRow(strategy, numberWords[6], ['h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h']);
         setRow(strategy, numberWords[7], ['h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h']);
-        setRow(strategy, numberWords[8], ['h', 'h', 'h', 'db_5', 'db_3', 'db_1', 'h', 'h', 'h', 'h']);
-        setRow(strategy, numberWords[9], ['h', 'db_1', 'db_0', 'db', 'db', 'db', 'db_3', 'h', 'h', 'h']);
-        setRow(strategy, numberWords[10], ['db_3', 'db', 'db', 'db', 'db', 'db', 'db', 'db', 'db_-1', 'db_4']);
-        setRow(strategy, numberWords[11], ['db_0', 'db', 'db', 'db', 'db', 'db', 'db', 'db', 'db', 'db']);
-        setRow(strategy, numberWords[12], ['h', 's_3', 's_1', 's_0', 's_-1', 's', 'h', 'h', 'h', 'h']);
-        setRow(strategy, numberWords[13], ['h', 's_0', 's', 's', 's', 's', 'h', 'h', 'h', 'h']);
+        setRow(strategy, numberWords[8], ['h', 'h', 'h', 'h_5_db', 'h_3_db', 'h_1_db', 'h', 'h', 'h', 'h']);
+        setRow(strategy, numberWords[9], ['h', 'h_1_db', 'h_0_db', 'db', 'db', 'db', 'h_3_db', 'h', 'h', 'h']);
+        setRow(strategy, numberWords[10], ['h_3_db', 'db', 'db', 'db', 'db', 'db', 'db', 'db', 'h_-1_db', 'h_4_db']);
+        setRow(strategy, numberWords[11], ['h_0_db', 'db', 'db', 'db', 'db', 'db', 'db', 'db', 'db', 'db']);
+        setRow(strategy, numberWords[12], ['h', 'h_3_s', 'h_1_s', 'h_0_s', 'h_-1_s', 's', 'h', 'h', 'h', 'h']);
+        setRow(strategy, numberWords[13], ['h', 'h_0_s', 's', 's', 's', 's', 'h', 'h', 'h', 'h']);
         setRow(strategy, numberWords[14], ['h', 's', 's', 's', 's', 's', 'h', 'h', 'h', 'h']);
-        setRow(strategy, numberWords[15], ['s_5', 's', 's', 's', 's', 's', 'h', 'h', 'h', 's_4']);
-        setRow(strategy, numberWords[16], ['s_3', 's', 's', 's', 's', 's', 'h', 'h', 's_5', 's_0']);
+        setRow(strategy, numberWords[15], ['h_5_s', 's', 's', 's', 's', 's', 'h', 'h', 'h', 'h_4_s']);
+        setRow(strategy, numberWords[16], ['h_3_s', 's', 's', 's', 's', 's', 'h', 'h', 'h_5_s', 'h_0_s']);
         setRow(strategy, numberWords[17], ['s', 's', 's', 's', 's', 's', 's', 's', 's', 's']);
         setRow(strategy, numberWords[18], ['s', 's', 's', 's', 's', 's', 's', 's', 's', 's']);
         setRow(strategy, numberWords[19], ['s', 's', 's', 's', 's', 's', 's', 's', 's', 's']);
@@ -291,15 +290,15 @@ BJ.StrategyFactory = {
         setRow(strategy, (numberWords[1] + "_" + numberWords[10]), ['s', 's', 's', 's', 's', 's', 's', 's', 's', 's']);
 
         setRow(strategy, (numberWords[1] + "_" + numberWords[1]), ['sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp']);
-        setRow(strategy, (numberWords[2] + "_" + numberWords[2]), ['h', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'h', 'h', 'h']);
-        setRow(strategy, (numberWords[3] + "_" + numberWords[3]), ['h', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'h', 'h', 'h']);
-        setRow(strategy, (numberWords[4] + "_" + numberWords[4]), ['h', 'h', 'h', 'db_5', 'sp', 'sp', 'h', 'h', 'h', 'h']);
-        setRow(strategy, (numberWords[5] + "_" + numberWords[5]), ['db_3', 'db', 'db', 'db', 'db', 'db', 'db', 'db', 'db_-1', 'db_4']);
-        setRow(strategy, (numberWords[6] + "_" + numberWords[6]), ['h', 'sp', 'sp', 'sp', 'sp', 'sp', 'h', 'h', 'h', 'h']);
-        setRow(strategy, (numberWords[7] + "_" + numberWords[7]), ['h', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'h', 'h']);
+        setRow(strategy, (numberWords[2] + "_" + numberWords[2]), ['dns', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'dns', 'dns', 'dns']);
+        setRow(strategy, (numberWords[3] + "_" + numberWords[3]), ['dns', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'dns', 'dns', 'dns']);
+        setRow(strategy, (numberWords[4] + "_" + numberWords[4]), ['dns', 'dns', 'dns', 'dns', 'sp', 'sp', 'dns', 'dns', 'dns', 'dns']);
+        setRow(strategy, (numberWords[5] + "_" + numberWords[5]), ['dns', 'dns', 'dns', 'dns', 'dns', 'dns', 'dns', 'dns', 'dns', 'dns']);
+        setRow(strategy, (numberWords[6] + "_" + numberWords[6]), ['dns', 'sp', 'sp', 'sp', 'sp', 'sp', 'dns', 'dns', 'dns', 'dns']);
+        setRow(strategy, (numberWords[7] + "_" + numberWords[7]), ['dns', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'dns', 'dns']);
         setRow(strategy, (numberWords[8] + "_" + numberWords[8]), ['sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp', 'sp']);
-        setRow(strategy, (numberWords[9] + "_" + numberWords[9]), ['s', 'sp', 'sp', 'sp', 'sp', 'sp', 's', 'sp', 'sp', 's']);
-        setRow(strategy, (numberWords[10] + "_" + numberWords[10]), ['s', 's', 's', 'sp_6', 'sp_5', 'sp_4', 's', 's', 's', 's']);
+        setRow(strategy, (numberWords[9] + "_" + numberWords[9]), ['dns', 'sp', 'sp', 'sp', 'sp', 'sp', 'dns', 'sp', 'sp', 'dns']);
+        setRow(strategy, (numberWords[10] + "_" + numberWords[10]), ['dns', 'dns', 'dns', 'dns_6_sp', 'dns_5_sp', 'dns_4_sp', 'dns', 'dns', 'dns', 'dns']);
 
         return strategy;
 

@@ -47,6 +47,67 @@ BJ.Deck = function(){
     }
 };
 
+BJ.CountSystem = function(countName){
+
+    this.one   = 0;
+    this.two   = 0;
+    this.three = 0;
+    this.four  = 0;
+    this.five  = 0;
+    this.six   = 0;
+    this.seven = 0;
+    this.eight = 0;
+    this.nine  = 0;
+    this.ten   = 0;
+
+    switch (countName){
+        case "hilo":
+            this.setHiLo();
+            break;
+        case "halves":
+            this.setHalves();
+            break;
+        case "omega2":
+            this.setOmegaTwo();
+            break;
+    }
+
+    this.setHiLo = function(){
+        this.setCards([-1, 1, 1, 1, 1, 1, 0, 0, 0, -1]);
+    };
+    this.setHalves = function(){
+        this.setCards([-1, .5, 1, 1, 1.5, 1, 0.5, 0, -0.5, -1]);
+    };
+    this.setOmegaTwo = function(){
+        this.setCards([0, 1, 1, 2, 2, 2, 1, 0, -1, -2]);
+    };
+
+    this.setCards = function(cardValues){
+        for (var index = 0; index < cardValues; index++){
+            this[numberWords[index]] = cardValues[index];
+        }
+
+    };
+    
+
+};
+
+BJ.SideBet = function(betName, amount){
+    this.amount = 0;
+    this.payout = 0;
+    this.won = false;
+    switch (betName){
+        case "insurance":
+            this.amount = amount;
+            this.payout = 3;
+            this.determine = function(dealerHand){
+                this.won = (dealerHand.cards.length === 2 && dealerHand.score() === 21) ? true : false;
+            }
+            break;
+    }
+
+}
+
 BJ.Hand = function(bet){
     this.cards = [];
     this.bet = bet;

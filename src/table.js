@@ -1,13 +1,14 @@
 /*global BJ:false */
 /*global numberWords:false*/
 
-BJ.Table = function(num_of_players, num_of_decks){
+BJ.Table = function(num_of_players, num_of_decks, rules){
     this.Players = [];
     for(var i = 0; i<num_of_players; i++){
         this.Players.push(new BJ.Player());
     }
     this.dealer = new BJ.Dealer();
     this.shoe = new BJ.Shoe(num_of_decks);
+    this.rules = rules;
 
     this.deal = function(){
         var trueCount = Math.floor(this.shoe.cardCount / (this.shoe.cards.length / 52));
@@ -28,6 +29,12 @@ BJ.Table = function(num_of_players, num_of_decks){
             }
             this.dealer.hand.cards.push(this.shoe.dealCard());
             if(j === 1){this.flipCardDown(this.dealer.hand.cards[1]);}
+        }
+
+        for( var playerNum = 0; playerNum < this.Players.length; playerNum++){
+            if(this.dealer.hand.cards[0].number === 1 && this.shoe.cardCount >= 3 && this.rules.insurance){
+                this.Players[playerNum].takeInsurance();
+            }
         }
     };
 
@@ -72,6 +79,17 @@ BJ.Table = function(num_of_players, num_of_decks){
         return scores;
     };
 
+    this.decisionConversion = function(hand, action){
+        if     (action === "h"  ){return "hit";}
+        else if(action === "db" ){return "doubleDown";}
+        else if(action === "s"  ){return "stand";}
+        else if(action === "sp" ){return "split";}
+        else if(action === "dns"){return "doNotSplit";}
+        else if(action === "ds" && hand.cards.length  >  2){return "stand";}
+        else if(action === "ds" && hand.cards.length === 2){return "doubleDown";}
+        else   {return "error in reading action";}
+    };
+
     this.decision = function(){
         if(this.dealer.hand.score() !== 21){
             for(var playerNum = 0; playerNum < this.Players.length; playerNum++){
@@ -83,9 +101,10 @@ BJ.Table = function(num_of_players, num_of_decks){
                     }
                     var stringHand = "";
                     hand.score();
+                    var doNotSplit = false;
                     while(!(hand.busted || hand.doubled)){
 
-                        stringHand = this.getStringValueForHand(hand, (player.hands.length < 4));
+                        stringHand = this.getStringValueForHand(hand, (player.hands.length < 4), doNotSplit);
                         
                         var dealerUpValue = this.dealer.hand.cards[0].value();
                         var decision = player.strategy[stringHand].dealerShowing[numberWords[dealerUpValue]];
@@ -93,30 +112,26 @@ BJ.Table = function(num_of_players, num_of_decks){
                         //convert count dependent actions
                         if(decision.indexOf('_') > -1){
                             var temp = decision.split('_');
-                            var countAction = temp[0];
+                            var underAction = temp[0];
                             var countReq = temp[1];
+                            var overEqualAction = temp[2];
 
-                            if(this.shoe.cardCount >= countReq){
-                                if(countAction === "h"){decision = "hit";}
-                                else if(countAction === "db"){decision = "doubleDown";}
-                                else if(countAction === "s"){decision = "stand";}
-                                else if(countAction === "sp"){decision = "split";}
-                                else if(countAction === "ds" && hand.cards.length > 2){decision = "stand";}
-                                else if(countAction === "ds" && hand.cards.length === 2){decision = "doubleDown";}
-                                else {console.log("error in conversion");}
-                            }
-                            else{
-                                decision = "hit";
-                            }
+                            decision = (this.shoe.cardCount < countReq) ? underAction : overEqualAction;
 
                         }
                         
+                        decision = this.decisionConversion(hand, decision);
+
                         if(decision === "doubleDown" && hand.cards.length > 2){decision = "hit";}
-                        if(decision === "ds" && hand.cards.length > 2){decision = "stand";}
-                        if(decision === "ds" && hand.cards.length === 2){decision = "doubleDown";}
-                        if(decision === "hit" && stringHand === "ten_ten"){decision = "stand";}
-                        if(decision === "hit" && stringHand === "eight_eight"){decision = "split";}
-                        if(decision === "hit" && stringHand === "nine_nine"){decision = "stand";}
+
+                        if(decision === "doNotSplit"){doNotSplit = true; continue;}
+                        else{doNotSplit = false;}
+
+                        //if(decision === "ds" && hand.cards.length > 2){decision = "stand";}
+                        //if(decision === "ds" && hand.cards.length === 2){decision = "doubleDown";}
+                        //if(decision === "hit" && stringHand === "ten_ten"){decision = "stand";}
+                        //if(decision === "hit" && stringHand === "eight_eight"){decision = "split";}
+                        //if(decision === "hit" && stringHand === "nine_nine"){decision = "stand";}
 
                         if(hand.rocket === true && hand.cards.length === 2){
                             break;
@@ -135,7 +150,7 @@ BJ.Table = function(num_of_players, num_of_decks){
                             break;
                         }
                         else{
-                            console.log("Error in decision");
+                            console.log(decision);
                             return false;
                         }
                         hand.score();
@@ -149,6 +164,13 @@ BJ.Table = function(num_of_players, num_of_decks){
         var score = this.Score();
         for (var playerNum = 0; playerNum < this.Players.length; playerNum++){
             var player = this.Players[playerNum];
+
+            while(player.sideBets.length >0){
+                var sideBet = player.sideBets.pop();
+                sideBet.determine(this.dealer.hand);
+                if(sideBet.won){player.bankroll += sideBet.amount * (sideBet.payout+1);}
+            }
+
             for (var handNum = 0; handNum < player.hands.length; handNum++){
                 var hand = player.hands[handNum];
                 var originalBet = hand.bet;
@@ -178,11 +200,11 @@ BJ.Table = function(num_of_players, num_of_decks){
 
 
 
-    this.getStringValueForHand = function(hand, splitAllowed){
+    this.getStringValueForHand = function(hand, splitAllowed, doNotSplit){
         if(hand.cards.length === 1){
             return numberWords[hand.cards[0].value()];
         }
-        else if(hand.cards[0].value() === hand.cards[1].value() && typeof hand.cards[2] === "undefined" && splitAllowed){
+        else if(hand.cards[0].value() === hand.cards[1].value() && typeof hand.cards[2] === "undefined" && splitAllowed && !doNotSplit){
             return numberWords[hand.cards[0].value()] + "_" + numberWords[hand.cards[1].value()];
         }
         else if(hand.isSoft && !(hand.cards[0].value() === 1 && hand.cards[1].value() === 1 && hand.cards.length === 2)){

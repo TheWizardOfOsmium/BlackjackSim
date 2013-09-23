@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<style>
+    .hide{
+        display:none;
+    }
+    .item{
+        position:absolute;
+    }
+    body{
+    }
+    #table{
+        background-color:#3D993D;
+        height:300px;
+        margin-top:50px;    
+        padding: 20px;
+    }
+    #dealer{
+        border:solid 1px #B20000;
+        height:75px;
+        width:75px;
+        margin:auto;
+    }
+    .player{
+        border:solid 1px #B20000;
+        height:75px;
+        width:75px;
+        margin-top:100px;
+        margin-right:7%;
+    }
+    #player1{
+        margin-right:0%;
+    }
+    .options{
+        background-color: #E0C266;
+        width:30px;
+        height:30px;
+        border-radius:15px;
+        margin-top:5px;
+        margin-right:5px;
+
+    }
+    .options:hover{
+        background-color:#9D8847;
+        cursor:pointer;
+    }
+    .options-icon{
+        margin-right:7px;
+        margin-top:5px;
+    }
+    #run{
+        margin-top:10px;
+    }
+
+</style>
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./js-libs/bootstrap-3.0.0/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="./js-libs/bootstrap-3.0.0/dist/css/bootstrap-theme.min.css"/>
+
+        <script src="./js-libs/jquery-2.0.0.min.js"></script>
+        <script src="./js-libs/bootstrap-3.0.0/dist/js/bootstrap.min.js"></script>
+        <script src="src/misc.js"></script>
+        <script src="src/shoe.js"></script>
+        <script src="src/strategy.js"></script>
+        <script src="src/player.js"></script>
+        <script src="src/dealer.js"></script>
+        <script src="src/table.js"></script>
+        <script src="src/statistics.js"></script>
+        <script src="src/main.js"></script>
+    </head>
+    <body>
+        <div class='container'>
+            <h1 class="col-md-offset-1">Blackjack</h1>
+            <div class='row'>
+                <div id="table" class='col-md-offset-1 col-md-10'>
+                    <a data-toggle="modal" href="#table-options" class="options pull-right"><span class='options-icon glyphicon-plus glyphicon pull-right'></span></a>
+                    <div id="dealer">
+                        <a class="options pull-right"><span class='options-icon glyphicon-plus glyphicon pull-right'></span></a>
+                    </div>
+                    <div id="player6" class='player pull-left'>
+                        <a class="options pull-right"><span class='options-icon glyphicon-plus glyphicon pull-right'></span></a>
+                    </div>
+                    <div id="player5" class='player pull-left'>
+                        <a class="options pull-right"><span class='options-icon glyphicon-plus glyphicon pull-right'></span></a>
+                    </div>
+                    <div id="player4" class='player pull-left'>
+                        <a class="options pull-right"><span class='options-icon glyphicon-plus glyphicon pull-right'></span></a>
+                    </div>
+                    <div id="player3" class='player pull-left'>
+                        <a class="options pull-right"><span class='options-icon glyphicon-plus glyphicon pull-right'></span></a>
+                    </div>
+                    <div id="player2" class='player pull-left'>
+                        <a class="options pull-right"><span class='options-icon glyphicon-plus glyphicon pull-right'></span></a>
+                    </div>
+                    <div id="player1" class='player pull-left'>
+                        <a class="options pull-right"><span class='options-icon glyphicon-plus glyphicon pull-right'></span></a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-offset-1 clear-fix row">
+                <button id='run'>Run</button>
+            </div>
+                
+        </div>
+
+        <div id="table-options" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Table Options" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id='table-form'>
+                            <fieldset>
+                                <select id='insurance' class='form-control'>
+                                    <option value='true'>True</option>
+                                    <option value='false'>False</option>
+                                </select>
+                                <label>Number of Decks:<input type='text' name='numOfDecks' value='6'/></label>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<!--            <form>
+                <fieldset>
+                    <select id='strategy' class='form-control'>
+                        <option value='basic'>Basic</option>
+                        <option value='cassidyH17'>Cassidy's H17</option>
+                        <option value='hilo'>HiLo</option>
+                    </select>
+                    <select id='dealer-hits' class='form-control'>
+                        <option value='h17'>H17</option>
+                        <option value='s17'>S17</option>
+                    </select>
+                    <label>Min-Max Bet:
+                        <input type='text' class='form-control' name='min-bet' value='10'/>
+                        - 
+                        <input type='text' class='form-control' name='max-bet' value='100'/>
+                    </label>
+                    <label>Spread:<input type='text' name='spread' value='4'/></label>
+                    <label>Number of Players:<input type='text' name='numOfPlayers' value='1'/></label>
+                    <label>Number of Hands:<input type='text' name='numOfHands' value='10000'/></label>
+                    <label>Penetration:<input type='text' name='penetration' value='.84'/></label>
+
+                </fieldset>
+            </form>-->
+
+    </body>
+</html>
+
+
+<script>
+
+    $(document).ready(function(){
+        $('#run').on('click', function(){
+            var parameters = {
+                numOfHands: parseInt($('input[name="numOfHands"]').val()),
+                numOfDecks: parseInt($('input[name="numOfDecks"]').val()),
+                numOfPlayers: parseInt($('input[name="numOfPlayers"]').val()),
+                minBet: parseInt($('input[name="min-bet"]').val()),
+                maxBet: parseInt($('input[name="max-bet"]').val()),
+                spread: parseInt($('input[name="spread"]').val()),
+                penetration: parseFloat($('input[name="penetration"]').val()),
+                dealerHits: $('#dealer-hits').val(),
+                strategy: $('#strategy').val(),
+            };
+            main(parameters);
+            return false;
+        });
+        $('a.options').on('click', function(){
+            
+        });
+    });
+</script>

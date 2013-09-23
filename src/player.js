@@ -5,6 +5,8 @@ BJ.Player = function(name){
     this.hands = [];
     this.hands[0] = new BJ.Hand(0);   
 
+    this.sideBets = [];
+
     this.name = name || "player";
     this.bankroll = 2000;
     this.minBet = 10;
@@ -27,6 +29,10 @@ BJ.Player = function(name){
                 break;
         }
     };
+
+    this.takeInsurance = function(){
+        this.sideBets.push(new BJ.SideBet("insurance", this.hands[0].bet));
+    }
 
 
     this.hit = function(hand, card){

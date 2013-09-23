@@ -15,8 +15,10 @@ function main(parameters){
     if(!allParamsSet){console.log("error in params"); return false;}
 
     var decksPerPack = parameters.numOfDecks;
+
+    var rules = {insurance:false};
     
-    var table = new BJ.Table(parameters.numOfPlayers, decksPerPack);
+    var table = new BJ.Table(parameters.numOfPlayers, decksPerPack, rules);
     table.Players[0].minBet = parameters.minBet;
     table.Players[0].maxBet = parameters.maxBet;
     table.Players[0].spread = parameters.spread;
